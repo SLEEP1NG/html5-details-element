@@ -10,6 +10,22 @@
         display: inline-block;
       }
 
+
+
+      /********************************************* 
+       * changes colors based on open/closed state 
+       *********************************************/
+      /* collapsed */
+      details.colorful{
+        background-color: pink;
+      }
+      
+      details[open].colorful{
+        background-color: yellow;
+      }
+ 
+
+
       /***************************
        * Hiding the twisty arrow
        ***************************/
@@ -35,18 +51,33 @@
 
 
 
-
-
-      /* changes colors based on open/closed state */
-      details.colorful{
-        background-color: pink;
+      /***************************
+       * Custom twisty arrow
+       ***************************/
+      /* firefox */
+      summary.custom-twisty{
+        list-style-type: none; 
       }
       
-      /* changes colors based on open/closed state */
-      details[open='false'].colorful{
-        background-color: yellow;
+      /* chrome, safari, opera */
+      summary.custom-twisty::-webkit-details-marker{
+        display: none;
       }
-    </style>
+
+      summary.custom-twisty::before{
+        content: '+ ';
+        font-weight: bold;
+      }
+
+      details[open] summary.custom-twisty::before{
+        content: '- ';
+        font-weight: bold;
+      }
+      /****************************/
+
+
+
+   </style>
   </head>
 
   <body>
@@ -75,8 +106,8 @@
     </details>
 
 
-    <details>
-      <summary class="alternate-hidden-twisty">
+    <details open>
+      <summary class="custom-twisty">
         <h2>Instructions</h2>
       </summary>
 

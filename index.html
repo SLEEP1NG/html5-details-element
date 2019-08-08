@@ -29,6 +29,8 @@
         <td>A basic example of a &lt;details&gt; element in use.</td>
         <td>NOTES:
           <ul>
+            <li>Not supported in IE or Edge (pre-Chromium)</li>
+            <li>Closed by default (use <code>open</code> marker attribute to override default behavior)</li>
             <li>Keyboard accessible: tab between the sections; space or enter expands/collapses</li>
             <li>When using &lt;h1&gt;, &lt;h2&gt; in &lt;summary&gt; elements, I used <code>display: inline-block;</code> to remove the awkward extra line-break</li>
           </ul>
@@ -40,7 +42,9 @@
         <td>An exploration of the <code>open</code> attribute</td>
         <td>NOTES:
           <ul>
-            <li>See CSS for hiding twisty arrow</li>
+            <li>Demonstrates custom styles for open/closed content</li>
+            <li>Demonstrates hiding twisty arrow</li>
+            <li>Demostrates custom character for open/closed indicator</li>
             <li>CSS is different for Firefox than Chrome, Safari, Opera</li>
             <li>Hiding twisty arrow DOES NOT disable mouse/keyboard show/hide functionality</li>
           </ul>
