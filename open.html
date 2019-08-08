@@ -10,20 +10,47 @@
         display: inline-block;
       }
 
+      /***************************
+       * Hiding the twisty arrow
+       ***************************/
       /* firefox */
       summary.hidden-twisty{
         list-style: none;
       }
 
-      /* chrome, safari */
+      /* chrome, safari, opera */
       summary.hidden-twisty::-webkit-details-marker{
         display: none;
+      }
+
+      /* 
+         Default display for summary is display: list-item
+         In Firefox ONLY, you can set display: block to also
+         hide the twisty arrow.
+      */
+      summary.alternate-hidden-twisty{
+        display: block;
+      }
+      /****************************/
+
+
+
+
+
+      /* changes colors based on open/closed state */
+      details.colorful{
+        background-color: pink;
+      }
+      
+      /* changes colors based on open/closed state */
+      details[open='false'].colorful{
+        background-color: yellow;
       }
     </style>
   </head>
 
   <body>
-    <details open>
+    <details open class="colorful">
       <summary>
         <h1>No Knead Bread</h1>
       </summary>
@@ -49,7 +76,7 @@
 
 
     <details>
-      <summary>
+      <summary class="alternate-hidden-twisty">
         <h2>Instructions</h2>
       </summary>
 
