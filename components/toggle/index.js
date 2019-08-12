@@ -10,8 +10,9 @@ window.customElements.define('th-toggle',
 
     connectedCallback(){
       let shadowRoot = this.attachShadow({mode: 'open'});
-      shadowRoot.appendChild(this.styleBlock);
-      shadowRoot.appendChild(this.contentBlock);
+      this.shadowRoot.appendChild(this.styleBlock);
+      this.shadowRoot.appendChild(this.contentBlock);
+      this.disableDetailsToggleOnDesktop(this.shadowRoot);
     }
 
     get styleBlock(){
@@ -20,7 +21,21 @@ window.customElements.define('th-toggle',
         summary h2{
           display: inline-block;
         }
-      `;
+
+        /*******************************************
+         * Conditionally hiding the twisty arrow 
+         * for summary on desktop, leaving it
+         * in place for mobile
+         ******************************************/
+        @media screen and (min-width: 800px){
+          summary{
+            list-style: none; //firefox
+          }
+
+          summary::-webkit-details-marker{
+            display: none; //chrome, safari, opera
+          }      
+        `;
       return styleBlock;
     }
 
@@ -35,4 +50,24 @@ window.customElements.define('th-toggle',
       `;
       return contentBlock;
     }
+
+
+    disableDetailsToggleOnDesktop(sr){
+      let details = sr.querySelector('details');
+      console.dir(details);
+      
+      if(window.innerWidth > 800){
+        details.addEventListener('toggle', (event) => this.detailsToggleListener(event));
+      } else{
+        details.removeEventListener('toggle', this.detailsToggleListener);
+      }
+    }
+
+    detailsToggleListener(event){
+      console.dir(event);
+      let d = event.srcElement;
+      if(d.open !== true){
+        d.open = true; 
+      }
+    }  
   });
