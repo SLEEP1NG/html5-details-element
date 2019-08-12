@@ -1,6 +1,8 @@
 # html5-details-element
 An exploration of the HTML5 Details element.
 
+See live demo at https://thirstyhead.com/html5-details-element.
+
 ## Notes
 
 | Website | Link |
