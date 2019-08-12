@@ -22,6 +22,21 @@
       #ingredients summary::-webkit-details-marker{
         display: none;
       }
+
+      /*******************************************
+       * Conditionally hiding the twisty arrow 
+       * for #instructions on desktop, leaving it
+       * in place for mobile
+       ******************************************/
+      @media screen and (min-width: 800px){
+        #instructions summary{ 
+          list-style: none; //firefox
+        }
+        
+        #instructions summary::-webkit-details-marker{
+          display: none; //chrome, safari, opera
+        }
+      }
     </style>
 
     <script>
@@ -32,6 +47,8 @@
         introduction.addEventListener('toggle', introductionToggleListener);
         showIntroductionState();
         disableIngredientsToggle();
+        disableInstructionsToggleOnDesktop();
+        window.addEventListener('resize', disableInstructionsToggleOnDesktop);
       }
 
       function introductionToggleListener(event){
@@ -61,6 +78,25 @@
             ingredients.open = true;
           }
         });
+      }
+
+      function disableInstructionsToggleOnDesktop(){
+        console.log('Conditionally disabling #instructions toggle on desktop');
+        let instructions = document.querySelector('#instructions');
+        if(window.innerWidth > 800){
+          instructions.addEventListener('toggle', instructionsToggleListener);
+          console.log("#instructions toggle disabled");
+        } else{
+          instructions.removeEventListener('toggle', instructionsToggleListener);  
+          console.log("#instructions toggle enabled");
+        }
+      }
+
+      function instructionsToggleListener(event){
+        let instructions = document.querySelector('#instructions');
+        if(instructions.open !== true){
+          instructions.open = true; 
+        }
       }
     </script>
   </head>
@@ -93,7 +129,7 @@
     </details>
 
 
-    <details>
+    <details open id="instructions">
       <summary>
         <h2>Instructions</h2>
       </summary>
