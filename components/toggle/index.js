@@ -1,6 +1,4 @@
 'use strict';
-// For more on custom elements, see
-// https://developers.google.com/web/fundamentals/web-components/shadowdom
 
 window.customElements.define('th-toggle',
   class ThToggle extends HTMLElement{
@@ -12,7 +10,11 @@ window.customElements.define('th-toggle',
       let shadowRoot = this.attachShadow({mode: 'open'});
       this.shadowRoot.appendChild(this.styleBlock);
       this.shadowRoot.appendChild(this.contentBlock);
-      this.disableDetailsToggleOnDesktop(this.shadowRoot);
+
+      //add event listeners
+      let details = this.shadowRoot.querySelector('details');
+      details.addEventListener('toggle', (event) => this.detailsToggleListener(event) );
+      window.addEventListener('resize', (event) => this.detailsToggleListener(event) );
     }
 
     get styleBlock(){
@@ -51,23 +53,12 @@ window.customElements.define('th-toggle',
       return contentBlock;
     }
 
-
-    disableDetailsToggleOnDesktop(sr){
-      let details = sr.querySelector('details');
-      console.dir(details);
-      
-      if(window.innerWidth > 800){
-        details.addEventListener('toggle', (event) => this.detailsToggleListener(event));
-      } else{
-        details.removeEventListener('toggle', this.detailsToggleListener);
-      }
-    }
-
     detailsToggleListener(event){
-      console.dir(event);
-      let d = event.srcElement;
-      if(d.open !== true){
-        d.open = true; 
+      if(window.innerWidth > 800){
+        let d = event.srcElement;
+        if(d.open !== true){
+          d.open = true; 
+        }
       }
     }  
   });
