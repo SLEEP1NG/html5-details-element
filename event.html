@@ -9,6 +9,19 @@
       summary > h2{
         display: inline-block;
       }
+
+      /*******************************************
+       * Hiding the twisty arrow for #ingredients
+       ******************************************/
+      /* firefox */
+      #ingredients summary{
+        list-style: none;
+      }
+
+      /* chrome, safari, opera */
+      #ingredients summary::-webkit-details-marker{
+        display: none;
+      }
     </style>
 
     <script>
@@ -18,6 +31,7 @@
         let introduction = document.querySelector('#introduction');
         introduction.addEventListener('toggle', introductionToggleListener);
         showIntroductionState();
+        disableIngredientsToggle();
       }
 
       function introductionToggleListener(event){
@@ -33,6 +47,20 @@
         let introduction = document.querySelector('#introduction');
         let output = document.querySelector('#introduction output');
         output.value = introduction.open;
+      }
+
+      function disableIngredientsToggle(){
+        let ingredients = document.querySelector('#ingredients');
+        ingredients.addEventListener('toggle', (event) => {
+          console.log('Toggle event for #ingredients');
+          //NOTE: this event is sent AFTER the state is changed,
+          //      so the event isn't cancellable
+          //event.preventDefault();
+          //event.stopImmediatePropagation();
+          if(ingredients.open !== true){
+            ingredients.open = true;
+          }
+        });
       }
     </script>
   </head>
@@ -50,9 +78,10 @@
     </details>
 
 
-    <details>
+    <details open id="ingredients">
       <summary>
         <h2>Ingredients</h2>
+        (Toggle disabled via JavaScript; Twisty-arrow hidden via CSS)
       </summary>
 
       <ul>
