@@ -26,6 +26,7 @@ window.customElements.define('th-toggle',
 
     get contentBlock(){
       let contentBlock = document.createElement('details');
+      contentBlock.setAttribute('open', '');
       contentBlock.innerHTML = `
         <summary>
           <h2><slot name="summary"></slot></h2>
