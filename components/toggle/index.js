@@ -4,6 +4,7 @@ window.customElements.define('th-toggle',
   class ThToggle extends HTMLElement{
     constructor(){
       super();
+      this.widthBreakpoint = 800;
     }
 
     connectedCallback(){
@@ -29,7 +30,7 @@ window.customElements.define('th-toggle',
          * for summary on desktop, leaving it
          * in place for mobile
          ******************************************/
-        @media screen and (min-width: 800px){
+        @media screen and (min-width: ${this.widthBreakpoint}px){
           summary{
             list-style: none; //firefox
           }
@@ -43,22 +44,23 @@ window.customElements.define('th-toggle',
 
     get contentBlock(){
       let contentBlock = document.createElement('details');
-      contentBlock.setAttribute('open', '');
       contentBlock.innerHTML = `
         <summary>
           <h2><slot name="summary"></slot></h2>
         </summary>
         <slot></slot>
       `;
+      if(window.innerWidth >= this.widthBreakpoint){
+        contentBlock.setAttribute('open', '');
+      }
       return contentBlock;
     }
 
     detailsToggleListener(event){
-      if(window.innerWidth > 800){
-        let d = event.srcElement;
-        if(d.open !== true){
-          d.open = true; 
-        }
+      if(window.innerWidth >= this.widthBreakpoint){
+        // disable collapse on desktop
+        let d = this.shadowRoot.querySelector('details');
+        d.open = true; 
       }
     }  
   });
